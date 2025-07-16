@@ -28,7 +28,7 @@
 	let isCreatingNewChat = $state(false);
 
 	function selectChat(chatId: string) {
-		goto(`/${chatId}`);
+		goto(`/chat/${chatId}`);
 	}
 
 	function createNewChat() {
@@ -62,6 +62,8 @@
 				class="class-list-item"
 				class:selected={chat.id === chatId}
 				onclick={() => selectChat(chat.id)}
+				onkeydown={(event: any) => event.key === 'Enter' && selectChat(chat.id)}
+				tabindex="0"
 			>
 				{chat.name}
 			</button>

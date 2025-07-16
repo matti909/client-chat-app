@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { authToken } from '../stores/auth';
+	import { goto } from '$app/navigation';
+
+	onMount(() => {
+		if (!$authToken) {
+			goto('/login');
+		} else {
+			goto('/chat');
+		}
+	});
+</script>

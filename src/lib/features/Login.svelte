@@ -14,7 +14,7 @@
 
 	onMount(() => {
 		if ($authToken) {
-			goto('/');
+			goto('/register');
 		}
 	});
 
@@ -25,7 +25,7 @@
 				password
 			});
 			authToken.set(response.data?.token);
-			goto('/');
+			goto('/chat');
 		} catch (error) {
 			const defaultError = 'An unexpected error occurred';
 			if (axios.isAxiosError(error) && error.response) {

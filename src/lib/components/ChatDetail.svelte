@@ -4,9 +4,7 @@
 	import { API_HOST } from '../../constants';
 	import '../../styles/chatDetails.css';
 
-	let { chatId = '' }: { chatId?: string } = $props();
-
-	let messages: { id: string; message: string; createdAt: number }[] = $state([]);
+	let messages: { id: string; message: string; createdAt: number }[] = $props();
 	let newMessage = $state('');
 	let errorMessage: string | null = $state(null);
 	let isLoading = $state(false);
@@ -14,16 +12,6 @@
 	onMount(async () => {
 		await loadMessages();
 	});
-
-	async function loadMessages() {
-		try {
-			const response = await axios.get(`${API_HOST}/api/v1/chat/${chatId}/message/`);
-			messages = response.data.data;
-		} catch (error) {
-			errorMessage = 'Failed to get chat details. Please try again later.';
-			console.error('Error fetching messages:', error);
-		}
-	}
 
 	async function sendMessage() {
 		isLoading = true;
