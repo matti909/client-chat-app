@@ -5,9 +5,8 @@
 	import axios from 'axios';
 
 	let { data }: PageProps = $props();
-	$inspect(data.message);
 
-	const messages = data.message;
+	let messages = $state([...data.message]);
 	let newMessage = $state('');
 	let errorMessage: string | null = $state(null);
 	let isLoading = $state(false);
@@ -18,8 +17,13 @@
 			const response = await axios.post(`${API_HOST}/api/v1/chat/${data.chatId}/message/`, {
 				message: newMessage
 			});
-			console.log(response);
-			//			messages = [...messages, { message: newMessage, createdAt: Date.now() }, response.data.data];
+
+			messages.push({
+				messages: newMessage,
+				createdAt: Date.now(),
+				...response.data.data
+			});
+
 			newMessage = '';
 		} catch (error) {
 			errorMessage = 'Failed to send message. Please try again later.';
